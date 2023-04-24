@@ -83,13 +83,36 @@ void zero12(vector<int> &arr, int n)
         arr[i] = 2;
 }
 
+// optimal approach - dutch national flag algorithm or 3-pointer approach
+// we are more or less sorting the array
+void zero12Opt(vector<int> &arr, int n)
+{
+    int low = 0, mid = 0, high = n - 1;
+    while (mid <= high)
+    {
+        if (arr[mid] == 0)
+        {
+            swap(arr[low], arr[mid]);
+            low++;
+            mid++;
+        }
+        else if (arr[mid] == 1)
+            mid++;
+        else
+        {
+            swap(arr[mid], arr[high]);
+            high--;
+        }
+    }
+}
+
 int main()
 {
     vector<int> arr = {2, 0, 2, 1, 1, 0};
     // int n = sizeof(arr) / sizeof(arr[0]);
     // int target = 14;
     // cout << twoSum(arr, 4, target);
-    zero12(arr, 6);
+    zero12Opt(arr, 6);
     for (auto it : arr)
         cout << it << " ";
     return 0;
