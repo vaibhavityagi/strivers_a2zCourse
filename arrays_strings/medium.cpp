@@ -84,7 +84,6 @@ void zero12(vector<int> &arr, int n)
 }
 
 // optimal approach - dutch national flag algorithm or 3-pointer approach
-// we are more or less sorting the array
 void zero12Opt(vector<int> &arr, int n)
 {
     int low = 0, mid = 0, high = n - 1;
@@ -106,14 +105,69 @@ void zero12Opt(vector<int> &arr, int n)
     }
 }
 
+// using hash map
+int majorityEleBF(int a[], int n)
+{
+    // key is the element, value is the frequency of the element
+    map<int, int> mpp;
+
+    // inserting the elements and their occurences into the map
+    for (int i = 0; i < n; i++)
+    {
+        mpp[a[i]]++;
+    }
+
+    // iterating over the map to find which key has the highest value
+    for (auto it : mpp)
+    {
+        if (it.second > (n / 2))
+            return it.first;
+    }
+
+    return -1;
+}
+
+int majorityEleOpt(int a[], int n)
+{
+    int count = 0;
+    int ele;
+    for (int i = 0; i < n; i++)
+    {
+        if (count == 0)
+        {
+            ele = a[i];
+            count = 1;
+        }
+        else if (ele == a[i])
+            count++;
+        else
+            count--;
+    }
+
+    // checking if the ele is the majority element
+    int count2 = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] == ele)
+            count2++;
+    }
+
+    if (count2 > (n / 2))
+        return ele;
+    return -1;
+}
+
 int main()
 {
-    vector<int> arr = {2, 0, 2, 1, 1, 0};
-    // int n = sizeof(arr) / sizeof(arr[0]);
+    int arr[] = {4, 4, 2, 4, 3, 4, 4, 3, 2, 4};
+    int n = sizeof(arr) / sizeof(arr[0]);
     // int target = 14;
     // cout << twoSum(arr, 4, target);
-    zero12Opt(arr, 6);
-    for (auto it : arr)
-        cout << it << " ";
+    // zero12Opt(arr, 6);
+    // for (auto it : arr)
+    //     cout << it << " ";
+
+    cout << "Majority element : " << majorityEleOpt(arr, n);
+
     return 0;
 }
