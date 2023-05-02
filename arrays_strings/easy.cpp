@@ -438,7 +438,7 @@ int singleNumberOpt(int arr[], int n)
     return xor1;
 }
 
-void longestSubArrK(int a[], int k, int n)
+void longestSubArrKBF(int a[], int k, int n)
 {
     /*
 
@@ -464,6 +464,8 @@ void longestSubArrK(int a[], int k, int n)
     cout << maxi;
     */
 
+    // brute force approach - this is taking one element and adding the sum of all the other elements in the subarray
+    // TC = O(n2)
     int len = 0;
     for (int i = 0; i < n; i++)
     {
@@ -479,6 +481,42 @@ void longestSubArrK(int a[], int k, int n)
     }
 
     cout << len;
+}
+
+// using hashing, this is the optimal approach if the array contains both positive and negative numbers
+void longestSubArrK(int a[], int k, int n)
+{
+    // key is storing the prefix sum and value is the index
+    unordered_map<int, int> preSumMap;
+    int prefixSum = 0;
+    int maxLen = 0;
+    for (int i = 0; i < n; i++)
+    {
+        // calculating the prefix sum i.e. x
+        prefixSum += a[i];
+
+        if (prefixSum == k)
+            maxLen = max(maxLen, i + 1);
+
+        // calculating x-k, if it is present in the map then we check if it is the maxLen or not
+        int rem = prefixSum - k;
+        if (preSumMap.find(rem) != preSumMap.end())
+        {
+            int len = i - preSumMap[rem];
+            maxLen = max(maxLen, len);
+        }
+
+        // if the prefix sum is not present in the map, we add it
+        // if condition added for cases like {2, 0, 0, 0, 3}, k = 3
+        if (preSumMap.find(prefixSum) == preSumMap.end())
+            preSumMap[prefixSum] = i;
+    }
+
+    cout << "Maximum lenght of the subarray having sum " << k << ": " << maxLen;
+}
+
+void longestSubArrKOpt(int a[], int k, int n)
+{
 }
 
 int main()
@@ -509,8 +547,8 @@ int main()
     // for (auto it : ans)
     //     cout << it << " ";
 
-    int array[] = {10, 5, 2, 7, 1, 9};
+    int array[] = {2, 3, 5, 1, 9};
     int n = sizeof(array) / sizeof(array[0]);
-    longestSubArrK(array, 15, n);
+    longestSubArrKOpt(array, 10, 5);
     return 0;
 }
