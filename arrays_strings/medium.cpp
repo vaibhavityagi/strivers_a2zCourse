@@ -157,9 +157,49 @@ int majorityEleOpt(int a[], int n)
     return -1;
 }
 
+// brute-better approach, TC = O(N2)
+void maxSubArraySum(int a[], int n)
+{
+    int maxSum = INT_MIN;
+    for (int i = 0; i < n; i++)
+    {
+        int sum = 0;
+        for (int j = i; j < n; j++)
+        {
+            sum += a[j];
+            maxSum = max(sum, maxSum);
+        }
+    }
+
+    cout << "Maximum sum of a subarray: " << maxSum;
+}
+
+// optimal: Kadane's algorithm
+void maxSubArraySumOpt(int a[], int n)
+{
+    int maxSum = INT_MIN;
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sum += a[i];
+
+        if (sum > maxSum)
+            maxSum = sum;
+
+        if (sum < 0)
+            sum = 0;
+    }
+
+    // this check is to ensure for the case of empty subarray
+    //  if (maxSum < 0)
+    //      maxSum = 0;
+
+    cout << "Maximum sum of a subarray: " << maxSum;
+}
+
 int main()
 {
-    int arr[] = {4, 4, 2, 4, 3, 4, 4, 3, 2, 4};
+    int arr[] = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
     int n = sizeof(arr) / sizeof(arr[0]);
     // int target = 14;
     // cout << twoSum(arr, 4, target);
@@ -167,7 +207,9 @@ int main()
     // for (auto it : arr)
     //     cout << it << " ";
 
-    cout << "Majority element : " << majorityEleOpt(arr, n);
+    // cout << "Majority element : " << majorityEleOpt(arr, n);
+
+    maxSubArraySumOpt(arr, n);
 
     return 0;
 }
