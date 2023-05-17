@@ -197,10 +197,35 @@ void maxSubArraySumOpt(int a[], int n)
     cout << "Maximum sum of a subarray: " << maxSum;
 }
 
+void profit(int p[], int n)
+{
+    int mini = 0;
+    int maxi = mini + 1;
+    int profit = 0;
+
+    // loop to find the day to buy on
+    for (int i = 0; i < n; i++)
+    {
+        if (p[i] < p[mini])
+            mini = i;
+    }
+
+    // loop to find the day to sell on
+    for (int j = mini + 1; j < n; j++)
+    {
+        if (p[j] > p[maxi])
+            maxi = j;
+    }
+
+    profit = p[maxi] - p[mini];
+    cout << profit << endl;
+}
+
 int main()
 {
     int arr[] = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-    int n = sizeof(arr) / sizeof(arr[0]);
+    int prices[] = {7, 1, 5, 3, 6, 4};
+    int n = sizeof(prices) / sizeof(prices[0]);
     // int target = 14;
     // cout << twoSum(arr, 4, target);
     // zero12Opt(arr, 6);
@@ -209,7 +234,9 @@ int main()
 
     // cout << "Majority element : " << majorityEleOpt(arr, n);
 
-    maxSubArraySumOpt(arr, n);
+    // maxSubArraySumOpt(arr, n);
+
+    profit(prices, n);
 
     return 0;
 }
