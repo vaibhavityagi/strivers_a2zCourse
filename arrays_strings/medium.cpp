@@ -221,11 +221,44 @@ void profit(int p[], int n)
     cout << profit << endl;
 }
 
+void buyAndSell(int p[], int n)
+{
+    int minPrice = INT_MAX;
+    int maxProfit = 0;
+    for (int i = 0; i < n; i++)
+    {
+        minPrice = min(minPrice, p[i]);
+        maxProfit = max(maxProfit, p[i] - minPrice);
+    }
+
+    cout << "Maximum profit made: " << maxProfit << endl;
+}
+
+void rearrangeBySignBF(int arr[], int n)
+{
+    vector<int> positives;
+    vector<int> negatives;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] >= 0)
+            positives.push_back(arr[i]);
+        else
+            negatives.push_back(arr[i]);
+    }
+
+    for (int i = 0; i < n - 1; i = i + 2)
+    {
+        arr[i] = positives[i / 2];
+        arr[i + 1] = negatives[i / 2];
+    }
+}
+
 int main()
 {
-    int arr[] = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-    int prices[] = {7, 1, 5, 3, 6, 4};
-    int n = sizeof(prices) / sizeof(prices[0]);
+    int arr[] = {1, 2, -3, -1, -2, 3};
+    // int prices[] = {7, 1, 5, 3, 6, 4};
+    int n = sizeof(arr) / sizeof(arr[0]);
     // int target = 14;
     // cout << twoSum(arr, 4, target);
     // zero12Opt(arr, 6);
@@ -236,7 +269,10 @@ int main()
 
     // maxSubArraySumOpt(arr, n);
 
-    profit(prices, n);
+    // buyAndSell(prices, n);
 
+    rearrangeBySignBF(arr, n);
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
     return 0;
 }
