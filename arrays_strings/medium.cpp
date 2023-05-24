@@ -254,6 +254,27 @@ void rearrangeBySignBF(int arr[], int n)
     }
 }
 
+vector<int> rearrangeBySign(int arr[], int n)
+{
+    vector<int> ans;
+    int posIndex = 0, negIndex = 1;
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] > 0)
+        {
+            ans[posIndex] = arr[i];
+            posIndex += 2;
+        }
+        else
+        {
+            ans[negIndex] = arr[i];
+            negIndex += 2;
+        }
+    }
+
+    return ans;
+}
+
 int main()
 {
     int arr[] = {1, 2, -3, -1, -2, 3};
@@ -271,8 +292,8 @@ int main()
 
     // buyAndSell(prices, n);
 
-    rearrangeBySignBF(arr, n);
-    for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
+    vector<int> ans = rearrangeBySign(arr, n);
+    for (int i = 0; i < ans.size(); i++)
+        cout << ans[i] << " ";
     return 0;
 }
