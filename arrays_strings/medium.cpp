@@ -256,7 +256,7 @@ void rearrangeBySignBF(int arr[], int n)
 
 vector<int> rearrangeBySign(int arr[], int n)
 {
-    vector<int> ans;
+    vector<int> ans(n, 0);
     int posIndex = 0, negIndex = 1;
     for (int i = 0; i < n; i++)
     {
@@ -275,9 +275,81 @@ vector<int> rearrangeBySign(int arr[], int n)
     return ans;
 }
 
+// variety 2 of the rearrange by sing question but with unequal number of
+
+// leaders in an array
+// A Leader is an element that is greater than all of the elements on its right side in the array
+vector<int> printLeadersBruteForce(int arr[], int n)
+{
+
+    vector<int> ans;
+
+    for (int i = 0; i < n; i++)
+    {
+        bool leader = true;
+
+        // Checking whether arr[i] is greater than all
+        // the elements in its right side
+        for (int j = i + 1; j < n; j++)
+            if (arr[j] > arr[i])
+            {
+
+                // If any element found is greater than current leader
+                // curr element is not the leader.
+                leader = false;
+                break;
+            }
+
+        // Push all the leaders in ans array.
+        if (leader)
+            ans.push_back(arr[i]);
+    }
+
+    return ans;
+}
+
+vector<int> leaders(int a[], int n)
+{
+    // I came up w this, this is almost the optimal soln, right logic, but to reduce the number of loops, we are looping from the back
+    /*
+    int maxi = INT_MIN;
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            maxi = max(maxi, a[j]);
+        }
+
+        if (a[i] > maxi)
+            cout << a[i] << " ";
+
+        maxi = INT_MIN;
+    }
+    //since last element is always a leader
+    cout << a[n - 1];
+    */
+
+    // optimal solution
+    vector<int> ans;
+
+    ans.push_back(a[n - 1]);
+
+    int maxi = a[n - 1];
+    for (int i = n - 2; i >= 0; i--)
+    {
+        if (a[i] > maxi)
+        {
+            maxi = a[i];
+            ans.push_back(a[i]);
+        }
+    }
+
+    return ans;
+}
+
 int main()
 {
-    int arr[] = {1, 2, -3, -1, -2, 3};
+    int arr[] = {10, 22, 12, 3, 0, 6};
     // int prices[] = {7, 1, 5, 3, 6, 4};
     int n = sizeof(arr) / sizeof(arr[0]);
     // int target = 14;
@@ -292,8 +364,13 @@ int main()
 
     // buyAndSell(prices, n);
 
-    vector<int> ans = rearrangeBySign(arr, n);
-    for (int i = 0; i < ans.size(); i++)
-        cout << ans[i] << " ";
+    // vector<int> ans = rearrangeBySign(arr, n);
+    // for (int i = 0; i < ans.size(); i++)
+    //     cout << ans[i] << " ";
+
+    vector<int> ans = leaders(arr, n);
+    for (int it : ans)
+        cout << it << " ";
+
     return 0;
 }
