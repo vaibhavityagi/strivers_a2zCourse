@@ -347,6 +347,47 @@ vector<int> leaders(int a[], int n)
     return ans;
 }
 
+// optimal approach
+void setZeros(int arr[3][3], int r, int c)
+{
+    // initializing row and column arrays as zero
+    int row[r] = {0};
+    int col[c] = {0};
+
+    // finding the row and column at which zero is present
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < c; j++)
+        {
+            if (arr[i][j] == 0)
+            {
+                row[i] = 1;
+                col[j] = 1;
+            }
+        }
+    }
+
+    // updating the array
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < c; j++)
+        {
+            if (row[i] == 1 || col[j] == 1)
+                arr[i][j] = 0;
+        }
+    }
+
+    // printing the updated matrix
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < c; j++)
+        {
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
 int main()
 {
     int arr[] = {10, 22, 12, 3, 0, 6};
@@ -368,9 +409,13 @@ int main()
     // for (int i = 0; i < ans.size(); i++)
     //     cout << ans[i] << " ";
 
-    vector<int> ans = leaders(arr, n);
-    for (int it : ans)
-        cout << it << " ";
+    // vector<int> ans = leaders(arr, n);
+    // for (int it : ans)
+    //     cout << it << " ";
+
+    // int matrix[3][4] = {{0, 1, 2, 0}, {3, 4, 5, 2}, {1, 3, 1, 5}};
+    int matrix[3][3] = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
+    setZeros(matrix, 3, 3);
 
     return 0;
 }
