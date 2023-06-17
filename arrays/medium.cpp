@@ -457,6 +457,51 @@ void setZerosOpt(int mat[3][3], int r, int c)
     }
 }
 
+// brute/better and optimal
+vector<vector<int>> matrixRotate(vector<vector<int>> &mat, int r)
+{
+    // approach - transpose the matrix and then reverse the transposed matrix
+    // this is what I conjured up
+    /*
+    //  temp matrix to store the transpose of mat
+    vector<vector<int>> temp(r, vector<int>(r, 0));
+
+    // transpose of mat into temp
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < r; j++)
+        {
+            temp[i][j] = mat[j][i];
+        }
+    }
+
+    // reverse storing the values of temp into mat
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < r; j++)
+        {
+            mat[i][j] = temp[i][2 - j];
+        }
+    }
+    */
+
+    // optimal
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            swap(mat[i][j], mat[j][i]);
+        }
+    }
+
+    for (int i = 0; i < r; i++)
+    {
+        reverse(mat[i].begin(), mat[i].end());
+    }
+
+    return mat;
+}
+
 int main()
 {
     int arr[] = {10, 22, 12, 3, 0, 6};
@@ -482,9 +527,24 @@ int main()
     // for (int it : ans)
     //     cout << it << " ";
 
-    int matrix2[3][4] = {{0, 1, 2, 0}, {3, 4, 5, 2}, {1, 3, 1, 5}};
-    int matrix1[3][3] = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
-    setZerosOpt(matrix1, 3, 3);
+    // int matrix2[3][4] = {{0, 1, 2, 0}, {3, 4, 5, 2}, {1, 3, 1, 5}};
+    // int matrix1[3][3] = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
+    // setZerosOpt(matrix1, 3, 3);
+
+    // rotate matrix by 90 degrees
+    vector<vector<int>> matrix3 = {{1, 2, 3},
+                                   {4, 5, 6},
+                                   {7, 8, 9}};
+
+    vector<vector<int>> ans = matrixRotate(matrix3, 3);
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            cout << ans[i][j] << " ";
+        }
+        cout << endl;
+    }
 
     return 0;
 }
