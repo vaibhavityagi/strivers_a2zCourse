@@ -502,9 +502,75 @@ vector<vector<int>> matrixRotate(vector<vector<int>> &mat, int r)
     return mat;
 }
 
+// brute of printing a matrix in spiral manner
+vector<vector<int>> spiral(vector<vector<int>> &mat, int r, int c)
+{
+    // first row
+    for (int i = 0; i <= 0; i++)
+    {
+        for (int j = 0; j < c; j++)
+        {
+            cout << mat[i][j] << " ";
+        }
+    }
+
+    // outer most col
+    for (int i = 1; i < r; i++)
+    {
+        for (int j = c - 1; j <= c - 1; j++)
+        {
+            cout << mat[i][j] << " ";
+        }
+    }
+
+    // bottom most row
+    for (int i = r - 1; i <= r - 1; i++)
+    {
+        for (int j = c - 2; j >= 0; j--)
+        {
+            cout << mat[i][j] << " ";
+        }
+    }
+
+    // outermost col
+    for (int i = r - 2; i > 0; i--)
+    {
+        for (int j = c - c; j <= 0; j++)
+        {
+            cout << mat[i][j] << " ";
+        }
+    }
+}
+
+// brute/better of count subarray where sum = k
+void countSubarray(int arr[], int n, int k)
+{
+    int count = 0;
+
+    // checking for each element and its subarrays
+    for (int i = 0; i < n; i++)
+    {
+        int sum = 0;
+        for (int j = i; j < n; j++)
+        {
+            sum += arr[j];
+            if (sum == k)
+                count++;
+        }
+    }
+
+    cout << count;
+}
+
+// optimal
+int countSubArr(int nums[], int k)
+{
+    int n = sizeof(nums) / sizeof(int);
+}
+
 int main()
 {
-    int arr[] = {10, 22, 12, 3, 0, 6};
+    int arr[] = {1, 1, 1};
     // int prices[] = {7, 1, 5, 3, 6, 4};
     int n = sizeof(arr) / sizeof(arr[0]);
     // int target = 14;
@@ -531,20 +597,29 @@ int main()
     // int matrix1[3][3] = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
     // setZerosOpt(matrix1, 3, 3);
 
-    // rotate matrix by 90 degrees
-    vector<vector<int>> matrix3 = {{1, 2, 3},
-                                   {4, 5, 6},
-                                   {7, 8, 9}};
+    // vector<vector<int>> matrix3 = {{1, 2, 3},
+    //                                {4, 5, 6},
+    //                                {7, 8, 9}};
 
-    vector<vector<int>> ans = matrixRotate(matrix3, 3);
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            cout << ans[i][j] << " ";
-        }
-        cout << endl;
-    }
+    // vector<vector<int>> ans = matrixRotate(matrix3, 3);
+    // for (int i = 0; i < 3; i++)
+    // {
+    //     for (int j = 0; j < 3; j++)
+    //     {
+    //         cout << ans[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    // vector<vector<int>> matrix4 = {{1, 2, 3},
+    //                                {4, 5, 6},
+    //                                {7, 8, 9}};
+
+    // spiral(matrix4, 3, 3);
+
+    // countSubarray(arr, n, 2);
+
+    cout << countSubArr(arr, 2);
 
     return 0;
 }
