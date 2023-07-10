@@ -1,3 +1,5 @@
+// count subarrays with sum equal to k
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -22,40 +24,39 @@ void countSubarray(int arr[], int n, int k)
 }
 
 // optimal
-int countSubArr(int a[], int k)
+int countSubArr(int a[], int k, int n)
 {
-    int n = sizeof(a) / sizeof(int);
-    // key is storing the prefix sum and value is the index
+    // int n = sizeof(a) / sizeof(a[0]);
+
+    // key is storing the prefix sum and value is the count of the prefix sum in the subarray
     unordered_map<int, int> preSumMap;
     int prefixSum = 0;
-    int maxLen = 0;
+    int count = 0;
+
+    // for cases where prefix sum == k
+    preSumMap[0] = 1;
+
     for (int i = 0; i < n; i++)
     {
         // calculating the prefix sum i.e. x
         prefixSum += a[i];
 
-        if (prefixSum == k)
-            maxLen = max(maxLen, i + 1);
-
-        // calculating x-k, if it is present in the map then we check if it is the maxLen or not
         int rem = prefixSum - k;
         if (preSumMap.find(rem) != preSumMap.end())
         {
-            int len = i - preSumMap[rem];
-            maxLen = max(maxLen, len);
+            count += preSumMap[rem];
         }
 
-        // if the prefix sum is not present in the map, we add it
-        // if condition added for cases like {2, 0, 0, 0, 3}, k = 3
-        if (preSumMap.find(prefixSum) == preSumMap.end())
-            preSumMap[prefixSum] = i;
+        preSumMap[prefixSum] += 1;
     }
+
+    return count;
 }
 
 int main()
 {
-    int arr[] = {1, 1, 1};
+    int arr[] = {3, 1, 2, 4};
     int n = sizeof(arr) / sizeof(arr[0]);
-    countSubarray(arr, n, 2);
+    cout << "Count of the subarrays with sum k: " << countSubArr(arr, 6, n);
     return 0;
 }

@@ -402,6 +402,6 @@ int main()
     int num;
     cout << "Enter the number of lines: ";
     cin >> num;
-    pattern22(num);
+    pattern5(num);
     return 0;
 }
