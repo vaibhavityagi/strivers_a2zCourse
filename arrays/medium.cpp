@@ -22,7 +22,7 @@ string twoSumBF(int a[], int n, int t)
 //  2 + x = 14 --> x(moreNeeded) = 14-2
 string twoSum(vector<int> arr, int n, int target)
 {
-    map<int, int> mpp;
+    unordered_map<int, int> mpp;
     for (int i = 0; i < n; i++)
     {
         int num = arr[i];
@@ -54,7 +54,7 @@ string twoSum(vector<int> a, int n, int t)
         else if (sum < t)
             left++;
         else
-            right++;
+            right--;
     }
     return "NO!";
 }
